@@ -2,6 +2,29 @@
 # 0. Estado Atual do Desenvolvimento
 
 **Data da última atualização:** 2026-09-17
+**Fase concluída:** Fase 2 — Authentication
+**Próxima fase:** Fase 3 — Multi-Tenancy
+
+## O que foi implementado na Fase 2
+
+- Schema Drizzle do Better Auth configurado (src/db/schema/auth.ts) cobrindo user, session, ccount, erification.
+- Paginas /login e /register (route group (auth)) com formularios integrados a API do authClient e validação Zod.
+- Proteção de rotas via src/middleware.ts: redireciona para login se nao logado na rota (protected).
+- Pagina protegida /dashboard acessivel apenas para usuario logado; extrai getSession via Server Component.
+- Helper getSession() utilitario em src/lib/auth-session.ts padronizando acesso a sessao em Server Components/Actions.
+- Decisao ADR-005: Nao usar o plugin Organizations do Better Auth. Manter o controle do dominio usando Drizzle puro.
+- Resolvido o warning de Build "Drizzle schema mismatch" que ocorria na Fase 1.
+- Validacoes passando: Typecheck, Lint (ESLint), Build (Next.js config ajustada).
+
+## O que ainda não existe
+
+- Banco PostgreSQL real local. (A aplicação builda e tipa, mas não pode rodar migrations ou app ate que o ambiente de host tenha PostgreSQL na DATABASE_URL).
+- Tests E2E Playwright. (Agendado para fase futura)
+- Multi-tenancy (organizations, members) a parte the session log in.
+---
+# 0. Estado Atual do Desenvolvimento
+
+**Data da última atualização:** 2026-09-17
 **Fase concluída:** Fase 1 — Foundation
 **Próxima fase:** Fase 2 — Auth completa (Better Auth + esquema de banco + login/logout)
 
