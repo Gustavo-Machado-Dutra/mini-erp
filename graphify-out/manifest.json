@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "context.md": {
-    "mtime": 1789686425.6225774,
-    "seen": 1789687437.9571671,
-    "ast_hash": "0eb56be8c9b258509c82821dd0e9c0c9",
+    "mtime": 1789688337.254825,
+    "seen": 1789688946.9048767,
+    "ast_hash": "28a0529d806576324485bc91f00cf748",
     "semantic_hash": ""
   },
   "openspec/changes/foundation-setup/.openspec.yaml": {
@@ -105,6 +105,144 @@
     "mtime": 1789686417.0835361,
     "seen": 1789687437.9571671,
     "ast_hash": "55b563521134b3153be9dfd0395ac470",
+    "semantic_hash": ""
+  },
+  "components.json": {
+    "mtime": 1789687854.8476157,
+    "seen": 1789688946.9048767,
+    "ast_hash": "9a13972385f0089c194d94bdbd7c88a8",
+    "semantic_hash": ""
+  },
+  "drizzle.config.ts": {
+    "mtime": 1789687673.0914383,
+    "seen": 1789688946.9048767,
+    "ast_hash": "1c4d1017c62b951b2e11a8947237aba2",
+    "semantic_hash": ""
+  },
+  "eslint.config.mjs": {
+    "mtime": 1789687490.8766387,
+    "seen": 1789688946.9048767,
+    "ast_hash": "2875ad967a2c0dd3654d041ad611e45c",
+    "semantic_hash": ""
+  },
+  "next.config.ts": {
+    "mtime": 1789688044.3876703,
+    "seen": 1789688946.9048767,
+    "ast_hash": "fe8fd91951038f164c13e13b0b0b9c30",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1789688901.899978,
+    "seen": 1789688946.9048767,
+    "ast_hash": "01deec9db4791872ab12c7985a56256c",
+    "semantic_hash": ""
+  },
+  "postcss.config.js": {
+    "mtime": 1789687638.2712867,
+    "seen": 1789688946.9048767,
+    "ast_hash": "db669f76dd2b630cbfa2abf80b0acb0e",
+    "semantic_hash": ""
+  },
+  "src/app/api/auth/[...all]/route.ts": {
+    "mtime": 1789688196.5633726,
+    "seen": 1789688946.9048767,
+    "ast_hash": "65534ff9c914822181f6533e7391ecbe",
+    "semantic_hash": ""
+  },
+  "src/app/layout.tsx": {
+    "mtime": 1789687503.8824477,
+    "seen": 1789688946.9048767,
+    "ast_hash": "4692f5de8e49da11066e95ec14660340",
+    "semantic_hash": ""
+  },
+  "src/app/page.tsx": {
+    "mtime": 1789687509.8173633,
+    "seen": 1789688946.9048767,
+    "ast_hash": "62aa371d82710beba065ac61a3137824",
+    "semantic_hash": ""
+  },
+  "src/components/ui/button.tsx": {
+    "mtime": 1789687905.293685,
+    "seen": 1789688946.9048767,
+    "ast_hash": "26e5ab156e4d1af0e5042d758589c1fc",
+    "semantic_hash": ""
+  },
+  "src/db/schema/auth.ts": {
+    "mtime": 1789688927.9242072,
+    "seen": 1789688946.9048767,
+    "ast_hash": "e65efe5861c013b03a0de27e1f3950a7",
+    "semantic_hash": ""
+  },
+  "src/db/schema/index.ts": {
+    "mtime": 1789688937.9642935,
+    "seen": 1789688946.9048767,
+    "ast_hash": "94d8cd3822d2d8fa486c58253f6f9866",
+    "semantic_hash": ""
+  },
+  "src/lib/auth.ts": {
+    "mtime": 1789688099.5095341,
+    "seen": 1789688946.9048767,
+    "ast_hash": "4eca555f2a1c283dd5940de2a4fe692a",
+    "semantic_hash": ""
+  },
+  "src/lib/db.ts": {
+    "mtime": 1789688126.8172407,
+    "seen": 1789688946.9048767,
+    "ast_hash": "1847e81745ef2fb8436b34f4c6e40647",
+    "semantic_hash": ""
+  },
+  "src/lib/utils.ts": {
+    "mtime": 1789687884.994974,
+    "seen": 1789688946.9048767,
+    "ast_hash": "a6a74f0aa5b125c5947095cb6c9dc7ca",
+    "semantic_hash": ""
+  },
+  "tailwind.config.ts": {
+    "mtime": 1789687916.0427468,
+    "seen": 1789688946.9048767,
+    "ast_hash": "ba57cf9641485440af84c11edf2f41e9",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1789687471.454097,
+    "seen": 1789688946.9048767,
+    "ast_hash": "d686b95534733228607f00ff1b9b48b9",
+    "semantic_hash": ""
+  },
+  "docs/DECISIONS.md": {
+    "mtime": 1789687798.9569316,
+    "seen": 1789688946.9048767,
+    "ast_hash": "bdce322573afeab603eac6e1cf654e97",
+    "semantic_hash": ""
+  },
+  "openspec/changes/authentication-foundation/.openspec.yaml": {
+    "mtime": 1789688660.1064467,
+    "seen": 1789688946.9048767,
+    "ast_hash": "e623e909adeced8e3fe2530dd50fa79b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/authentication-foundation/design.md": {
+    "mtime": 1789688742.5202284,
+    "seen": 1789688946.9048767,
+    "ast_hash": "b4decad0a1bcbcc2255666270bd838cd",
+    "semantic_hash": ""
+  },
+  "openspec/changes/authentication-foundation/proposal.md": {
+    "mtime": 1789688690.398918,
+    "seen": 1789688946.9048767,
+    "ast_hash": "ef86c5e447ca8dadfa8a46ec808ff69d",
+    "semantic_hash": ""
+  },
+  "openspec/changes/authentication-foundation/specs/auth/email-password/spec.md": {
+    "mtime": 1789688710.5246525,
+    "seen": 1789688946.9048767,
+    "ast_hash": "c8db5f7ecc59aae6b669b32107908cf9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/authentication-foundation/tasks.md": {
+    "mtime": 1789688763.6055698,
+    "seen": 1789688946.9048767,
+    "ast_hash": "a1f0dc406fa12f9f0ca5ff534eaf4b11",
     "semantic_hash": ""
   }
 }

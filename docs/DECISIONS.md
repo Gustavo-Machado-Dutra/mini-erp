@@ -137,3 +137,31 @@ shadcn/ui.
 - Componentes sao adicionados sob demanda via 
 px shadcn add <component>.
 - O estilo padrao pode ser customizado editando diretamente os arquivos em src/components/ui/.
+
+## ADR-005: Nao utilizar o plugin Organizations do Better Auth
+
+**Data:** 2026-09-17
+**Status:** Aceito
+
+### Problema
+
+O RevenueFlow e um SaaS B2B multi-tenant que necessita de isolamento de dados por organizacao. O Better Auth oferece um plugin oficial 'Organizations'.
+
+### Alternativas
+
+1. **Usar plugin Organizations do Better Auth:** rapido, mas dita a estrutura do banco e como roles sao verificadas, espalhando essas regras para o cliente de auth.
+2. **Construir tabelas customizadas de Organization (via Drizzle):** mantem o dominio (User, Profile, Organization, Organization Member) 100% aderente ao definido no spec.md. O Better Auth e usado apenas para Sessao e User Login.
+
+### Decisao
+
+Alternativa 2. O plugin Organizations do Better Auth NAO sera utilizado no MVP (Fase 2 nem Fase 3). O Better Auth sera limitado estritamente as tabelas de `user`, `session`, `account` e `verification`.
+
+### Motivo
+
+- O `spec.md` define que a organizacao tem um dominio proprio e as regras de negocio determinam quais organizacoes um usuario acessa.
+- O plugin Organizations forca uma convencao de schema (ex: `member` vs `organization_members`) e de logica que cria atrito com o dominio ja desenhado para o PostgreSQL.
+- Auth tem uma finalidade primaristica: "quem voce e". O "que organizacao voce acessa" e de autorizacao de dominio, e devera ficar no Drizzle logic.
+
+### Consequencias
+
+- A Fase 3 implementara a multi-tenancy usando Server Actions para validar auth-session contra as tabelas costumizadas `organizations` e `organization_members`.

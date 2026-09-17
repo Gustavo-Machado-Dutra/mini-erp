@@ -1,12 +1,12 @@
 # Graph Report - mini-erp  (2026-09-17)
 
 ## Corpus Check
-- 16 files · ~20,917 words
+- 38 files · ~24,329 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 4 file(s) not represented in the graph (top: (none) 4)
+- Unclassified: 7 file(s) not represented in the graph (top: (none) 5, .example 1, .css 1)
 
 ## Summary
-- 223 nodes · 208 edges · 26 communities (20 shown, 6 thin omitted)
+- 424 nodes · 407 edges · 37 communities (29 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -23,40 +23,52 @@
 - ADDED Requirements
 - ADDED Requirements
 - 3. Princípios do Projeto
-- 4. Stack Oficial do MVP
+- package.json
 - proposal.md
 - 19.1 E2E
 - 22. OpenSpec + TLC Spec-Driven Development
-- 6. Multi-Tenancy
+- ADR-001: Monolito modular com Next.js
 - 10. Receita e Attribution
-- 7. Perfis e Autorização
-- 5. Arquitetura
+- ADDED Requirements
+- compilerOptions
 - AGENTS.md
+- eslint.config.mjs
+- dependencies
+- db.ts
+- devDependencies
+- Tasks
+- Decisions
+- Proposal
+- schema/auth.ts
+- route.ts
 
 ## God Nodes (most connected - your core abstractions)
-1. `8. Domínio` - 13 edges
-2. `20. Roadmap do MVP` - 13 edges
-3. `14. Banco de Dados` - 12 edges
-4. `3. Princípios do Projeto` - 8 edges
-5. `4. Stack Oficial do MVP` - 8 edges
-6. `Decisions` - 7 edges
-7. `22. OpenSpec + TLC Spec-Driven Development` - 7 edges
-8. `6. Multi-Tenancy` - 6 edges
-9. `ADDED Requirements` - 5 edges
-10. `7. Perfis e Autorização` - 5 edges
+1. `compilerOptions` - 16 edges
+2. `8. Domínio` - 13 edges
+3. `20. Roadmap do MVP` - 13 edges
+4. `14. Banco de Dados` - 12 edges
+5. `Tasks` - 10 edges
+6. `3. Princípios do Projeto` - 8 edges
+7. `4. Stack Oficial do MVP` - 8 edges
+8. `Decisions` - 7 edges
+9. `22. OpenSpec + TLC Spec-Driven Development` - 7 edges
+10. `scripts` - 6 edges
 
 ## Surprising Connections (you probably didn't know these)
 - None detected - all connections are within the same source files.
 
-## Communities (26 total, 6 thin omitted)
+## Import Cycles
+- None detected.
+
+## Communities (37 total, 8 thin omitted)
 
 ### Community 0 - "context.md"
 Cohesion: 0.07
 Nodes (28): 10. Follow-ups, 11. Revenue Attribution, 12. Dashboard, 13. Desenvolvimento, 14. TLC Spec-Driven Development, 15. OpenSpec, 16. Segurança, 17. Banco (+20 more)
 
 ### Community 1 - "spec.md"
-Cohesion: 0.08
-Nodes (25): 11.1 Gráfico, 11.2 Pipeline, 11.3 Follow-ups, 11.4 Atividades recentes, 11. Dashboard, 12.1 UX, 12. Interface, 13. Validação (+17 more)
+Cohesion: 0.04
+Nodes (48): 11.1 Gráfico, 11.2 Pipeline, 11.3 Follow-ups, 11.4 Atividades recentes, 11. Dashboard, 12.1 UX, 12. Interface, 13. Validação (+40 more)
 
 ### Community 2 - "20. Roadmap do MVP"
 Cohesion: 0.15
@@ -98,9 +110,9 @@ Nodes (7): ADDED Requirements, Purpose, Requirement: Instância Better Auth conf
 Cohesion: 0.25
 Nodes (8): 3.1 Simplicidade, 3.2 Segurança, 3.3 Evolução sem overengineering, 3.4 Banco como fonte de verdade, 3.5 Server-side first, 3.6 Não confiar no cliente, 3.7 Mudanças pequenas, 3. Princípios do Projeto
 
-### Community 12 - "4. Stack Oficial do MVP"
-Cohesion: 0.25
-Nodes (8): 4.1 Framework, 4.2 UI, 4.3 Backend/Data, 4.4 Validação, 4.5 Testes, 4.6 Qualidade, 4.7 Não utilizar inicialmente, 4. Stack Oficial do MVP
+### Community 12 - "package.json"
+Cohesion: 0.06
+Nodes (33): name, private, scripts, build, dev, lint, start, typecheck (+25 more)
 
 ### Community 13 - "proposal.md"
 Cohesion: 0.29
@@ -114,39 +126,77 @@ Nodes (7): 19.1 E2E, 19.2 Domínio, 19.3 Validação, 19. Testes, Auth, Organiza
 Cohesion: 0.29
 Nodes (7): 22.1 TLC Spec-Driven Development, 22.2 OpenSpec, 22.3 Regra de separação, 22.4 Mudanças pequenas, 22.5 Mudanças significativas, 22.6 Regra contra duplicação, 22. OpenSpec + TLC Spec-Driven Development
 
-### Community 16 - "6. Multi-Tenancy"
-Cohesion: 0.33
-Nodes (6): 6.1 Modelo, 6.2 Membership, 6.3 Organização atual, 6.4 Isolamento no banco, 6.5 Secrets e acesso ao banco, 6. Multi-Tenancy
+### Community 16 - "ADR-001: Monolito modular com Next.js"
+Cohesion: 0.08
+Nodes (24): ADR-001: Monolito modular com Next.js, ADR-002: Drizzle ORM com PostgreSQL, ADR-003: Better Auth para autenticação e sessao, ADR-004: shadcn/ui como biblioteca de componentes, Alternativas, Alternativas, Alternativas, Alternativas (+16 more)
 
 ### Community 17 - "10. Receita e Attribution"
 Cohesion: 0.40
 Nodes (5): 10.1 Receita registrada, 10.2 Attribution, 10.3 Regra inicial, 10.4 Métricas, 10. Receita e Attribution
 
-### Community 18 - "7. Perfis e Autorização"
-Cohesion: 0.40
-Nodes (5): 7.1 Platform Admin, 7.2 Organization Owner, 7.3 Organization Admin, 7.4 Professional, 7. Perfis e Autorização
+### Community 18 - "ADDED Requirements"
+Cohesion: 0.11
+Nodes (18): ADDED Requirements, Purpose, Requirement: Cadastro com email e senha, Requirement: Login com email e senha, Requirement: Logout, Requirement: Protecao de rotas, Requirement: Sessao segura, Scenario: Acesso autenticado a rota protegida (+10 more)
 
-### Community 19 - "5. Arquitetura"
-Cohesion: 0.50
-Nodes (4): 5.1 Server Components, 5.2 Client Components, 5.3 Server Actions, 5. Arquitetura
+### Community 19 - "compilerOptions"
+Cohesion: 0.11
+Nodes (18): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+10 more)
+
+### Community 26 - "eslint.config.mjs"
+Cohesion: 0.13
+Nodes (11): compat, __dirname, eslintConfig, __filename, nextConfig, @eslint/eslintrc, next, ref_path (+3 more)
+
+### Community 27 - "dependencies"
+Cohesion: 0.14
+Nodes (14): dependencies, better-auth, class-variance-authority, clsx, drizzle-orm, lucide-react, next, postgres (+6 more)
+
+### Community 28 - "db.ts"
+Cohesion: 0.18
+Nodes (11): better-auth, ref_better_auth_adapters_drizzle, ref_db_schema, ref_drizzle_orm_postgres_js, ref_lib_db, postgres, server-only, auth (+3 more)
+
+### Community 29 - "devDependencies"
+Cohesion: 0.17
+Nodes (12): devDependencies, autoprefixer, drizzle-kit, eslint, eslint-config-next, @eslint/eslintrc, postcss, tailwindcss (+4 more)
+
+### Community 30 - "Tasks"
+Cohesion: 0.18
+Nodes (10): 1. Correcoes da Fase 1, 2. Schema do Banco, 3. Better Auth Config, 4. Sessao Server-Side, 5. Middleware, 6. Paginas de Auth, 7. Pagina Protegida, 8. Documentacao (+2 more)
+
+### Community 31 - "Decisions"
+Cohesion: 0.20
+Nodes (9): Context, Decisions, Design, Goals / Non-Goals, Layout groups para separar rotas publicas e protegidas, Middleware para protecao de rotas, Nao usar Organizations plugin do Better Auth, Risks / Trade-offs (+1 more)
+
+### Community 32 - "Proposal"
+Cohesion: 0.25
+Nodes (7): Capabilities, Impact, Modified Capabilities, New Capabilities, Proposal, What Changes, Why
+
+### Community 33 - "schema/auth.ts"
+Cohesion: 0.29
+Nodes (5): ref_drizzle_orm_pg_core, account, session, user, verification
+
+### Community 34 - "route.ts"
+Cohesion: 0.33
+Nodes (5): ref_better_auth_next_js, ref_lib_auth, dynamic, GET, POST
 
 ## Knowledge Gaps
-- **174 isolated node(s):** `The Stance`, `Planning a Change`, `What You Might Do`, `Check for context`, `When no change exists` (+169 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 181 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **304 isolated node(s):** `__filename`, `__dirname`, `compat`, `eslintConfig`, `nextConfig` (+299 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 331 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `8. Domínio` connect `8. Domínio` to `spec.md`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Why does `20. Roadmap do MVP` connect `20. Roadmap do MVP` to `spec.md`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Why does `14. Banco de Dados` connect `14. Banco de Dados` to `spec.md`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **What connects `The Stance`, `Planning a Change`, `What You Might Do` to the rest of the system?**
-  _174 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **What connects `__filename`, `__dirname`, `compat` to the rest of the system?**
+  _304 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `context.md` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
 - **Should `spec.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.05668016194331984 - nodes in this community are weakly interconnected._
