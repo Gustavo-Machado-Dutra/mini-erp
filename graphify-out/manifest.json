@@ -1,0 +1,110 @@
+{
+  ".codex/hooks.json": {
+    "mtime": 1789687434.2461996,
+    "seen": 1789687437.9571671,
+    "ast_hash": "b4ba4964b458f700120ca0633d01f19c",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-apply-change/SKILL.md": {
+    "mtime": 1789686624.3707914,
+    "seen": 1789687437.9571671,
+    "ast_hash": "33544421668da459c74982bb0141b9e6",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-archive-change/SKILL.md": {
+    "mtime": 1789686624.3798952,
+    "seen": 1789687437.9571671,
+    "ast_hash": "184575b3f92124e8aef4afcb7e9f4922",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-explore/SKILL.md": {
+    "mtime": 1789686624.3687868,
+    "seen": 1789687437.9571671,
+    "ast_hash": "c02718508f430a599d414d46012da76f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-propose/SKILL.md": {
+    "mtime": 1789686624.3837843,
+    "seen": 1789687437.9571671,
+    "ast_hash": "f2cd1d6e42359f37acc02c28b34b088f",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-sync-specs/SKILL.md": {
+    "mtime": 1789686624.3767893,
+    "seen": 1789687437.9571671,
+    "ast_hash": "e148957c082dbccb0b2541495fd84056",
+    "semantic_hash": ""
+  },
+  ".agents/skills/openspec-update-change/SKILL.md": {
+    "mtime": 1789686624.373788,
+    "seen": 1789687437.9571671,
+    "ast_hash": "8026ee48532dc55c7468f22c3c30a0c1",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1789687434.2326877,
+    "seen": 1789687437.9571671,
+    "ast_hash": "21ceb6533048be51308e69e7b74a35cf",
+    "semantic_hash": ""
+  },
+  "context.md": {
+    "mtime": 1789686425.6225774,
+    "seen": 1789687437.9571671,
+    "ast_hash": "0eb56be8c9b258509c82821dd0e9c0c9",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/.openspec.yaml": {
+    "mtime": 1789687153.0453117,
+    "seen": 1789687437.9571671,
+    "ast_hash": "e623e909adeced8e3fe2530dd50fa79b",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/design.md": {
+    "mtime": 1789687278.4320788,
+    "seen": 1789687437.9571671,
+    "ast_hash": "480647792bc470c2a14d2ded3530a7b4",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/proposal.md": {
+    "mtime": 1789687192.5409558,
+    "seen": 1789687437.9571671,
+    "ast_hash": "37ece1f95ef77229cafcc2e82d7a0242",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/specs/foundation/auth-bootstrap/spec.md": {
+    "mtime": 1789687244.2825484,
+    "seen": 1789687437.9571671,
+    "ast_hash": "22fae64e3f102d2fc50dd324bdd7dfdb",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/specs/foundation/database-access/spec.md": {
+    "mtime": 1789687233.1887567,
+    "seen": 1789687437.9571671,
+    "ast_hash": "387b5d85cb382b4fa3762a740dd9e5e0",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/specs/foundation/project-setup/spec.md": {
+    "mtime": 1789687233.1927671,
+    "seen": 1789687437.9571671,
+    "ast_hash": "db9b9601f7a0e7dc7e81635b1b5cae41",
+    "semantic_hash": ""
+  },
+  "openspec/changes/foundation-setup/tasks.md": {
+    "mtime": 1789687313.8501875,
+    "seen": 1789687437.9571671,
+    "ast_hash": "f27f3d474d223b6163acefbdfb27b783",
+    "semantic_hash": ""
+  },
+  "openspec/config.yaml": {
+    "mtime": 1789686624.388269,
+    "seen": 1789687437.9571671,
+    "ast_hash": "a88f7d80935e1a432dc9b5affe49eb27",
+    "semantic_hash": ""
+  },
+  "spec.md": {
+    "mtime": 1789686417.0835361,
+    "seen": 1789687437.9571671,
+    "ast_hash": "55b563521134b3153be9dfd0395ac470",
+    "semantic_hash": ""
+  }
+}
