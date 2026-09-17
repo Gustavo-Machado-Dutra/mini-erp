@@ -1,3 +1,38 @@
+---
+# 0. Estado Atual do Desenvolvimento
+
+**Data da última atualização:** 2026-09-17
+**Fase concluída:** Fase 1 — Foundation
+**Próxima fase:** Fase 2 — Auth completa (Better Auth + esquema de banco + login/logout)
+
+## O que foi implementado
+
+- [x] Git inicializado (branch: master, commit inicial: 70ee6b5)
+- [x] Next.js 15.5 com App Router, TypeScript strict, Tailwind CSS v3, shadcn/ui (estrutura)
+- [x] Drizzle ORM configurado (src/lib/db.ts) — schema vazio, aguardando Fase 2
+- [x] Better Auth instalado e configurado (src/lib/auth.ts) — sem providers ainda
+- [x] Route handler Better Auth (src/app/api/auth/[...all]/route.ts)
+- [x] Zod instalado
+- [x] Estrutura de pastas: src/app, src/lib, src/db/schema, src/db/migrations, src/modules, src/components/ui
+- [x] .env.example com DATABASE_URL, BETTER_AUTH_SECRET, BETTER_AUTH_URL
+- [x] docs/DECISIONS.md — ADR-001 a ADR-004
+- [x] OpenSpec change oundation-setup documentada (4/4 artefatos)
+
+## Validações executadas
+
+- TypeScript: PASS (tsc --noEmit sem erros)
+- Lint: PASS (ESLint sem erros)
+- Build: PASS com aviso (build completa, .next/ gerado; Better Auth loga aviso de schema mismatch porque o banco PostgreSQL não existe ainda — esperado e resolve-se na Fase 2 ao criar o banco e rodar migrations)
+
+## O que ainda não existe
+
+- Banco PostgreSQL real (DATABASE_URL é placeholder)
+- Schema do banco (tabelas auth, organizations, members, etc.)
+- Login/logout funcional
+- Qualquer página além do placeholder /
+- Testes E2E
+
+---
 # RevenueFlow — CONTEXT
 
 > Memória operacional condensada do projeto.
