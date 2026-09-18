@@ -2,6 +2,42 @@
 # 0. Estado Atual do Desenvolvimento
 
 **Data da última atualização:** 2026-09-17
+**Fase concluída:** Fase 3 — Multi-Tenancy
+**Próxima fase recomendada:** Fase 4 — Layout & Navigation
+
+## O que foi implementado na Fase 3
+
+- Schema Drizzle de Tenancy em src/db/schema/tenancy.ts exportando organizations, organization_members e profiles com chaves estrangeiras com cascade, enum member_role ('owner', 'admin', 'member') e index único em (organization_id, user_id).
+- Helpers server-side de Tenant Context e Autorização em src/modules/tenancy/context.ts:
+  - equireSession(): validação de sessão ativa no servidor.
+  - equireOrganization(targetOrgId?): resolução do tenant ativo (via parâmetro ou cookie seguro f_active_org com fallback na primeira org do usuário) validando ativamente se o user.id da sessão é membro no banco.
+  - equireOrganizationRole(allowedRoles, targetOrgId?): autorização por papel (owner, dmin, member).
+  - getUserOrganizations(userId): listagem das organizações do usuário.
+- Server Actions de Tenancy em src/modules/tenancy/actions.ts:
+  - createOrganizationAction: criação transacional da organização + membership com role owner para o criador, validada com Zod.
+  - switchOrganizationAction: troca validada de organização ativa gravando cookie seguro após verificação de permissão no banco.
+  - getUserOrganizationsAction: recuperação das empresas vinculadas.
+- Interface de Usuário (UI):
+  - Página /organizations/new com formulário de cadastro de empresa e validação Zod.
+  - Página /dashboard atualizada exibindo os dados do usuário, a organização ativa, a role atual e o seletor OrgSwitcher para troca rápida de tenant.
+- Suíte de testes automatizada 	ests/tenancy/isolation.test.ts cobrindo os 7 cenários obrigatórios de isolamento multi-tenant e prevenção contra IDOR. Executada via 
+pm test (PASS: 8/8 assertions).
+- Decisão arquitetural ADR-006 registrada em docs/DECISIONS.md.
+- OpenSpec change multi-tenancy documentada e arquivada para a especificação permanente openspec/specs/tenancy/organizations/spec.md.
+
+## Validações
+
+- TypeScript (	sc --noEmit): PASS (zero erros)
+- Lint (ESLint): PASS (zero erros, zero warnings)
+- Build (Next.js 15.5): PASS
+- Testes de Isolamento (
+pm test): PASS (8/8)
+- Database runtime: NOT VALIDATED em conexão viva local (PostgreSQL 16 detectado no host Windows, mas sem credenciais fornecidas no ambiente de sandbox). O schema e as queries estão 100% tipados e prontos para 
+px drizzle-kit push ao configurar a DATABASE_URL no .env.
+---
+# 0. Estado Atual do Desenvolvimento
+
+**Data da última atualização:** 2026-09-17
 **Fase concluída:** Fase 2 — Authentication
 **Próxima fase:** Fase 3 — Multi-Tenancy
 

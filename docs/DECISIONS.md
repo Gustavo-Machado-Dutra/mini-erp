@@ -165,3 +165,39 @@ Alternativa 2. O plugin Organizations do Better Auth NAO sera utilizado no MVP (
 ### Consequencias
 
 - A Fase 3 implementara a multi-tenancy usando Server Actions para validar auth-session contra as tabelas costumizadas `organizations` e `organization_members`.
+
+---
+
+## ADR-006: Modelo de Multi-Tenancy e Isolamento Server-Side
+
+**Data:** 2026-09-17
+**Status:** Aceito
+
+### Problema
+
+Definir a arquitetura de isolamento multi-tenant do RevenueFlow e como a associacao de usuarios e organizacoes sera autorizada e resolvida no servidor.
+
+### Alternativas
+
+1. **Supabase RLS / DB Policies exclusivas:** requer PostgreSQL gerenciado com sessions especificas, acopla o backend a infraestrutura de terceiros e dificulta testes locais offline.
+2. **Coluna `organization_id` na tabela de usuario:** impede que um usuario participe de multiplas empresas no futuro.
+3. **Membership Drizzle + Tenant Context Server-Side:** tabela `organization_members` intermediaria associando `userId` e `organizationId` com papeis (`owner`, `admin`, `member`), e helpers server-side (`requireOrganization`) que validam membership ativamente a cada requisicao antes de qualquer query de negocio.
+
+### Decisao
+
+Alternativa 3. O isolamento de dados do RevenueFlow baseia-se em:
+- Tabela `organization_members` com constraint unica `(organization_id, user_id)`.
+- Funcoes server-side de validacao estrita (`requireSession`, `requireOrganization`, `requireOrganizationRole`).
+- Resolucao de tenant ativo via cookie seguro ou parametro validado atomicamente contra `organization_members`.
+- Queries Drizzle explicitamente escopadas com `organizationId` validado no backend.
+
+### Motivo
+
+- Total conformidade com `spec.md` e simplicidade sem overengineering.
+- Previne vulnerabilidades de IDOR (Insecure Direct Object Reference) ja que nenhum identificador de organizacao enviado pelo browser e aceito como prova de permissao.
+- Permite que um usuario pertenca a varias organizacoes com papeis diferentes em cada uma.
+
+### Consequencias
+
+- Toda Server Action e Route Handler de dominio deve obrigatoriamente chamar `requireOrganization` ou `requireOrganizationRole`.
+- A suite de testes automatizada `tests/tenancy/isolation.test.ts` valida e documenta as garantias de isolamento.
