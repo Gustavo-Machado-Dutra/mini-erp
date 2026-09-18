@@ -1,4 +1,3 @@
-// Database schema — will be populated in subsequent phases
-// Each domain module will add its tables here
-
+// Database schema
 export * from './auth'
+export * from './tenancy'
