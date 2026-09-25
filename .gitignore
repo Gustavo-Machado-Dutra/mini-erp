@@ -44,3 +44,9 @@ yarn-error.log*
 # Editor
 .vscode/settings.json
 .idea/
+
+# Playwright output
+test-results/
+playwright-report/
+# Graphify cache temp backups
+graphify-out/cache/.gfy-replace-bak-*.tmp

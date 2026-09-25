@@ -1,3 +1,11 @@
 // Database schema
 export * from './auth'
 export * from './tenancy'
+export * from './customers'
+export * from './leads'
+export * from './services'
+export * from './professionals'
+export * from './appointments'
+export * from './follow-ups'
+export * from './conversions'
+export * from './revenue'

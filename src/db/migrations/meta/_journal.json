@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789691062724,
+      "tag": "0000_redundant_steve_rogers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789692606967,
+      "tag": "0001_tan_gladiator",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789693818464,
+      "tag": "0002_fancy_kinsey_walden",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789695513736,
+      "tag": "0003_smart_hannibal_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789702220530,
+      "tag": "0004_yielding_zuras",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790360877873,
+      "tag": "0005_conversions_revenue_spec",
+      "breakpoints": true
+    }
+  ]
+}

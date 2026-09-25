@@ -1,8 +1,18 @@
-import { NextResponse } from 'next/server'
+﻿import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 // Mapeamento de rotas protegidas (exigem estar logado)
-const protectedRoutes = ['/dashboard']
+const protectedRoutes = [
+  '/dashboard',
+  '/customers',
+  '/leads',
+  '/services',
+  '/professionals',
+  '/appointments',
+  '/follow-ups',
+  '/conversions',
+  '/revenue',
+]
 
 // Mapeamento de rotas exclusivas para nao logados (ex: nao deve acessar /login se ja estiver logado)
 const guestOnlyRoutes = ['/login', '/register']

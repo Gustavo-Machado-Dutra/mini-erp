@@ -1,4 +1,4 @@
-﻿import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   darkMode: ['class'],
@@ -31,6 +31,14 @@ const config: Config = {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

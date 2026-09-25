@@ -4,6 +4,7 @@ import { eq, and } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { organizations, organizationMembers } from '@/db/schema/tenancy'
 import { getSession } from '@/lib/auth-session'
+import { redirect } from 'next/navigation'
 import type { TenantContext, UserOrganizationItem } from './types'
 import type { MemberRole } from '@/db/schema/tenancy'
 
@@ -96,7 +97,7 @@ export async function requireOrganization(targetOrgId?: string | null): Promise<
   if (!resolvedOrgId) {
     const userOrgs = await getUserOrganizations(userId)
     if (userOrgs.length === 0) {
-      throw new ForbiddenError('Usuário não possui nenhuma organização vinculada', 403)
+      throw new NoOrganizationError()
     }
     resolvedOrgId = userOrgs[0].id
   }
@@ -148,4 +149,24 @@ export async function requireOrganizationRole(
   }
 
   return context
+}
+
+export class NoOrganizationError extends ForbiddenError {
+  constructor(message: string = 'Usu\u00e1rio n\u00e3o possui nenhuma organiza\u00e7\u00e3o vinculada', public statusCode: number = 403) {
+    super(message)
+    this.name = 'NoOrganizationError'
+  }
+}
+
+export async function requireOrganizationForPage(
+  targetOrgId?: string | null
+): Promise<TenantContext> {
+  try {
+    return await requireOrganization(targetOrgId)
+  } catch (error) {
+    if (error instanceof NoOrganizationError) {
+      redirect('/organizations/new')
+    }
+    throw error
+  }
 }
