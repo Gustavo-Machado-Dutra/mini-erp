@@ -1,7 +1,7 @@
-# Graph Report - mini-erp  (2026-09-25)
+# Graph Report - mini-erp  (2026-09-26)
 
 ## Corpus Check
-- 233 files · ~101,430 words
+- 233 files · ~101,877 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 6, .example 1, .css 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `badd9e6f`
+- Built from commit: `6ab73a59`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -592,11 +592,11 @@ Nodes (6): Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `drizzle-orm` connect `drizzle-orm` to `tenancy.ts`, `revenue/queries.ts`, `appointments/actions.ts`, `conversions/types.ts`, `context.ts`, `leads/actions.ts`, `package.json`, `professionals/actions.ts`, `follow-up-isolation.test.ts`, `services/actions.ts`?**
-  _High betweenness centrality (0.127) - this node is a cross-community bridge._
+  _High betweenness centrality (0.123) - this node is a cross-community bridge._
 - **Why does `react` connect `react` to `card.tsx`, `package.json`, `button.tsx`, `use-toast.ts`, `ref_components_ui_button`, `service-form.tsx`, `leads/page.tsx`, `ref_modules_tenancy_context`, `lead-form.tsx`, `appointments/[id]/page.tsx`, `ref_next_link`, `ref_lib_utils`, `lucide-react`, `dropdown-menu.tsx`, `toast.tsx`, `customer-form.tsx`, `revenue/new/page.tsx`, `select.tsx`, `table.tsx`, `dialog.tsx`, `avatar.tsx`?**
-  _High betweenness centrality (0.072) - this node is a cross-community bridge._
+  _High betweenness centrality (0.068) - this node is a cross-community bridge._
 - **Why does `requireSession()` connect `context.ts` to `Tasks`, `Design`, `Tasks`, `leads/actions.ts`, `Architecture & Data Flow`, `ADR-006: Modelo de Multi-Tenancy e Isolamento Server-Side`, `follow-up-isolation.test.ts`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
   _696 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `context.md` be split into smaller, more focused modules?**
