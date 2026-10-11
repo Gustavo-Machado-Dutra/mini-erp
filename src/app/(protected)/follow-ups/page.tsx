@@ -30,12 +30,27 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
   await requireOrganizationForPage()
 
   const { tab } = await searchParams
-  const currentTab = (tab as 'today' | 'overdue' | 'upcoming' | 'completed' | 'all') || 'today'
+  const currentTab = tab === 'overdue' || tab === 'upcoming' || tab === 'completed' || tab === 'all' ? tab : 'today'
 
   const [followUpList, counts] = await Promise.all([
     getFollowUps({ period: currentTab }),
     getFollowUpCounts(),
   ])
+
+  const emptyMessages = {
+    today: ['Nenhum contato previsto para hoje', 'Confira os próximos contatos ou agende um novo follow-up.'],
+    overdue: ['Nenhum contato atrasado', 'Os contatos pendentes estão em dia. Confira os próximos agendamentos.'],
+    upcoming: ['Nenhum contato futuro agendado', 'Agende o próximo contato para continuar acompanhando suas oportunidades.'],
+    completed: ['Nenhum contato concluído', 'Os contatos aparecerão aqui quando você registrar a conclusão.'],
+    all: ['Nenhum follow-up cadastrado', 'Agende um contato para acompanhar uma oportunidade ou retomar uma conversa.'],
+  }
+  const emptyAction = counts.all === 0
+    ? { href: '/follow-ups/new', label: 'Agendar primeiro follow-up' }
+    : currentTab === 'today' || currentTab === 'overdue'
+      ? { href: '/follow-ups?tab=upcoming', label: 'Ver próximos' }
+      : currentTab === 'completed'
+        ? { href: '/follow-ups?tab=all', label: 'Ver todos os contatos' }
+        : { href: '/follow-ups/new', label: 'Agendar follow-up' }
 
   const formatDateTime = (date: Date) => {
     return new Intl.DateTimeFormat('pt-BR', {
@@ -80,6 +95,7 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
       {/* Tabs com contadores */}
       <div className="flex border-b border-gray-200 overflow-x-auto">
         <Link
+          aria-current={currentTab === 'today' ? 'page' : undefined}
           href="/follow-ups?tab=today"
           className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
             currentTab === 'today'
@@ -97,6 +113,7 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
           </span>
         </Link>
         <Link
+          aria-current={currentTab === 'overdue' ? 'page' : undefined}
           href="/follow-ups?tab=overdue"
           className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
             currentTab === 'overdue'
@@ -116,6 +133,7 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
           </span>
         </Link>
         <Link
+          aria-current={currentTab === 'upcoming' ? 'page' : undefined}
           href="/follow-ups?tab=upcoming"
           className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
             currentTab === 'upcoming'
@@ -133,6 +151,7 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
           </span>
         </Link>
         <Link
+          aria-current={currentTab === 'completed' ? 'page' : undefined}
           href="/follow-ups?tab=completed"
           className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
             currentTab === 'completed'
@@ -152,6 +171,7 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
           </span>
         </Link>
         <Link
+          aria-current={currentTab === 'all' ? 'page' : undefined}
           href="/follow-ups?tab=all"
           className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
             currentTab === 'all'
@@ -176,13 +196,13 @@ export default async function FollowUpsPage({ searchParams }: FollowUpsPageProps
             <PhoneForwarded className="size-6" />
           </div>
           <h3 className="text-base font-semibold text-gray-900 mb-1">
-            Nenhum follow-up encontrado
+            {emptyMessages[currentTab][0]}
           </h3>
           <p className="text-sm text-gray-500 max-w-md mx-auto mb-6">
-            Não há tarefas de contato registradas para a visualização selecionada.
+            {emptyMessages[currentTab][1]}
           </p>
-          <Link href="/follow-ups/new">
-            <Button size="sm">Agendar Primeiro Follow-up</Button>
+          <Link href={emptyAction.href}>
+            <Button size="sm">{emptyAction.label}</Button>
           </Link>
         </div>
       ) : (

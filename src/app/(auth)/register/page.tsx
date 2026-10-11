@@ -34,17 +34,30 @@ export default function RegisterPage() {
       return
     }
 
-    const { error: signUpError } = await authClient.signUp.email({
-      email,
-      password,
-      name,
-    })
+    try {
+      const { data, error: signUpError } = await authClient.signUp.email({
+        email,
+        password,
+        name,
+      })
 
-    if (signUpError) {
-      setError(signUpError.message || 'Erro ao realizar cadastro.')
-      setPending(false)
-    } else {
+      if (signUpError) {
+        setError(signUpError.status >= 500
+          ? 'O serviço de cadastro está indisponível. Tente novamente em alguns instantes.'
+          : signUpError.message || 'Não foi possível realizar o cadastro.')
+        return
+      }
+
+      if (!data) {
+        setError('Não foi possível confirmar o cadastro. Tente novamente.')
+        return
+      }
+
       router.push('/dashboard')
+    } catch {
+      setError('Não foi possível conectar ao serviço de cadastro. Verifique sua conexão e tente novamente.')
+    } finally {
+      setPending(false)
     }
   }
 
@@ -56,7 +69,7 @@ export default function RegisterPage() {
       </div>
       
       {error && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm mb-4">
+        <div role="alert" className="bg-red-50 text-red-600 p-3 rounded-md text-sm mb-4">
           {error}
         </div>
       )}
@@ -66,6 +79,8 @@ export default function RegisterPage() {
           <Label htmlFor="name">Nome completo</Label>
           <Input 
             id="name" 
+            name="name"
+            autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -76,6 +91,8 @@ export default function RegisterPage() {
           <Label htmlFor="email">E-mail</Label>
           <Input 
             id="email" 
+            name="email"
+            autoComplete="email"
             type="email" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -87,6 +104,8 @@ export default function RegisterPage() {
           <Label htmlFor="password">Senha</Label>
           <Input 
             id="password" 
+            name="password"
+            autoComplete="new-password"
             type="password" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}

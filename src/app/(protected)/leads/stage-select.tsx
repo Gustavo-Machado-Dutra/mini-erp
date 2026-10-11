@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useId, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import type { LeadStage } from '@/db/schema/leads'
 import { LEAD_STAGES, LEAD_STAGE_LABELS } from '@/modules/leads/types'
@@ -14,24 +14,33 @@ interface StageSelectProps {
 
 export function StageSelect({ leadId, currentStage, compact = false }: StageSelectProps) {
   const router = useRouter()
+  const errorId = useId()
+  const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStage = e.target.value as LeadStage
     if (newStage === currentStage) return
 
+    setError(null)
     startTransition(async () => {
-      await updateLeadStageAction({
-        id: leadId,
-        stage: newStage,
-      })
-      router.refresh()
+      try {
+        const result = await updateLeadStageAction({
+          id: leadId,
+          stage: newStage,
+        })
+        if (!result.success) { setError(result.error); return }
+        router.refresh()
+      } catch { setError('Não foi possível alterar o estágio. Tente novamente.') }
     })
   }
 
   return (
     <div className="relative inline-block">
       <select
+        aria-label="Alterar estágio do lead"
+        aria-describedby={error ? errorId : undefined}
+        aria-invalid={!!error}
         value={currentStage}
         onChange={handleChange}
         disabled={isPending}
@@ -45,6 +54,7 @@ export function StageSelect({ leadId, currentStage, compact = false }: StageSele
           </option>
         ))}
       </select>
+      {error && <p id={errorId} role="alert" className="field-error">{error}</p>}
       {isPending && (
         <span className="ml-2 text-xs text-blue-600 animate-pulse">Atualizando...</span>
       )}

@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { createCustomerSchema } from '@/modules/customers/schemas'
+import { toast } from '@/hooks/use-toast'
 import { createCustomerAction, updateCustomerAction } from '@/modules/customers/actions'
 
 interface CustomerFormData {
@@ -23,6 +25,16 @@ interface CustomerFormProps {
 
 export function CustomerForm({ mode, initialData }: CustomerFormProps) {
   const router = useRouter()
+  const formRef = useRef<HTMLFormElement>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({})
+  const showFieldErrors = (errors: Record<string, string[]>) => {
+    setFieldErrors(errors)
+    const first = Object.keys(errors)[0]
+    requestAnimationFrame(() => {
+      const field = formRef.current?.elements.namedItem(first)
+      if (field instanceof HTMLElement) field.focus()
+    })
+  }
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
@@ -35,48 +47,64 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
     e.preventDefault()
     setError(null)
 
-    if (!name.trim()) {
-      setError('Nome é obrigatório')
+    setFieldErrors({})
+    const parsed = createCustomerSchema.safeParse({ name, email, phone, notes })
+    if (!parsed.success) {
+      const errors: Record<string, string[]> = {}
+      for (const issue of parsed.error.issues) {
+        const field = String(issue.path[0])
+        errors[field] = [...(errors[field] ?? []), issue.message]
+      }
+      if (!name.trim()) errors.name = ['Informe o nome do cliente']
+      showFieldErrors(errors)
       return
     }
 
     startTransition(async () => {
-      if (mode === 'create') {
-        const result = await createCustomerAction({
-          name: name.trim(),
-          email: email.trim() || undefined,
-          phone: phone.trim() || undefined,
-          notes: notes.trim() || undefined,
-        })
+      try {
+        if (mode === 'create') {
+          const result = await createCustomerAction({
+            name: name.trim(),
+            email: email.trim() || undefined,
+            phone: phone.trim() || undefined,
+            notes: notes.trim() || undefined,
+          })
 
-        if (!result.success) {
-          setError(result.error)
-          return
+          if (!result.success) {
+            if (result.fieldErrors) showFieldErrors(result.fieldErrors)
+            setError(result.error)
+            return
+          }
+
+          toast({ title: 'Cliente cadastrado' })
+          router.push(`/customers/${result.data.id}`)
+          router.refresh()
+        } else {
+          if (!initialData?.id) {
+            setError('ID do cliente não encontrado para atualização')
+            return
+          }
+
+          const result = await updateCustomerAction({
+            id: initialData.id,
+            name: name.trim(),
+            email: email.trim() || undefined,
+            phone: phone.trim() || undefined,
+            notes: notes.trim() || undefined,
+          })
+
+          if (!result.success) {
+            if (result.fieldErrors) showFieldErrors(result.fieldErrors)
+            setError(result.error)
+            return
+          }
+
+          toast({ title: 'Cliente atualizado' })
+          router.push(`/customers/${initialData.id}`)
+          router.refresh()
         }
-
-        router.push(`/customers/${result.data.id}`)
-        router.refresh()
-      } else {
-        if (!initialData?.id) {
-          setError('ID do cliente não encontrado para atualização')
-          return
-        }
-
-        const result = await updateCustomerAction({
-          id: initialData.id,
-          name: name.trim(),
-          email: email.trim() || undefined,
-          phone: phone.trim() || undefined,
-          notes: notes.trim() || undefined,
-        })
-
-        if (!result.success) {
-          setError(result.error)
-          return
-        }
-
-        router.push(`/customers/${initialData.id}`)
-        router.refresh()
+      } catch {
+        setError('Não foi possível salvar o cliente. Seus dados foram mantidos; tente novamente.')
       }
     })
   }
@@ -84,9 +112,9 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
   const cancelHref = mode === 'edit' && initialData?.id ? `/customers/${initialData.id}` : '/customers'
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} noValidate onSubmit={handleSubmit} aria-busy={isPending} className="space-y-6">
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+        <div role="alert" className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
           {error}
         </div>
       )}
@@ -98,6 +126,8 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
           </Label>
           <Input
             id="customer-name"
+            aria-invalid={!!fieldErrors.name}
+            aria-describedby={fieldErrors.name ? 'customer-name-error' : undefined}
             name="name"
             type="text"
             required
@@ -107,6 +137,7 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
             className="mt-1"
             disabled={isPending}
           />
+          {fieldErrors.name && <p id="customer-name-error" className="field-error" role="alert">{fieldErrors.name[0]}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,6 +145,8 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
             <Label htmlFor="customer-email">E-mail</Label>
             <Input
               id="customer-email"
+              aria-invalid={!!fieldErrors.email}
+              aria-describedby={fieldErrors.email ? 'customer-email-error' : undefined}
               name="email"
               type="email"
               value={email}
@@ -122,12 +155,15 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
               className="mt-1"
               disabled={isPending}
             />
+            {fieldErrors.email && <p id="customer-email-error" className="field-error" role="alert">{fieldErrors.email[0]}</p>}
           </div>
 
           <div>
             <Label htmlFor="customer-phone">Telefone / WhatsApp</Label>
             <Input
               id="customer-phone"
+              aria-invalid={!!fieldErrors.phone}
+              aria-describedby={fieldErrors.phone ? 'customer-phone-error' : undefined}
               name="phone"
               type="tel"
               value={phone}
@@ -136,6 +172,7 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
               className="mt-1"
               disabled={isPending}
             />
+            {fieldErrors.phone && <p id="customer-phone-error" className="field-error" role="alert">{fieldErrors.phone[0]}</p>}
           </div>
         </div>
 
@@ -143,6 +180,8 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
           <Label htmlFor="customer-notes">Observações</Label>
           <textarea
             id="customer-notes"
+            aria-invalid={!!fieldErrors.notes}
+            aria-describedby={fieldErrors.notes ? 'customer-notes-error' : undefined}
             name="notes"
             rows={4}
             value={notes}
@@ -151,6 +190,7 @@ export function CustomerForm({ mode, initialData }: CustomerFormProps) {
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
             disabled={isPending}
           />
+          {fieldErrors.notes && <p id="customer-notes-error" className="field-error" role="alert">{fieldErrors.notes[0]}</p>}
         </div>
       </div>
 

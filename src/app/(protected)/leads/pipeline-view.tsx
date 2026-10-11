@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type { PipelineStageGroup } from '@/modules/leads/types'
 import { LEAD_STAGE_COLORS } from '@/modules/leads/types'
 import { StageSelect } from './stage-select'
-import { Phone, Mail, User, Tag, Plus } from 'lucide-react'
+import { Phone, Mail, Tag, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface PipelineViewProps {
@@ -37,7 +37,7 @@ export function PipelineView({ stageGroups }: PipelineViewProps) {
   }
 
   return (
-    <div className="overflow-x-auto pb-4">
+    <div role="region" aria-label="Funil por est?gio" tabIndex={0} className="overflow-x-auto pb-4">
       <div className="flex gap-4 min-w-[1100px]">
         {stageGroups.map((group) => {
           const colorConfig = LEAD_STAGE_COLORS[group.stage] || {
@@ -80,7 +80,7 @@ export function PipelineView({ stageGroups }: PipelineViewProps) {
                       <div className="flex items-start justify-between gap-1">
                         <Link
                           href={`/leads/${lead.id}`}
-                          className="font-medium text-sm text-gray-900 hover:text-blue-600 line-clamp-1"
+                          className="font-medium text-sm text-gray-900 hover:text-blue-600 break-words"
                         >
                           {lead.name}
                         </Link>
@@ -103,12 +103,6 @@ export function PipelineView({ stageGroups }: PipelineViewProps) {
                           <div className="flex items-center gap-1.5 truncate">
                             <Mail className="size-3 text-gray-400 shrink-0" />
                             <span className="truncate">{lead.email}</span>
-                          </div>
-                        )}
-                        {lead.customerName && (
-                          <div className="flex items-center gap-1.5 text-blue-600 truncate">
-                            <User className="size-3 shrink-0" />
-                            <span className="truncate font-medium">{lead.customerName}</span>
                           </div>
                         )}
                       </div>

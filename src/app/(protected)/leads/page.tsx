@@ -4,7 +4,7 @@ import { getLeads, getLeadsGroupedByStage } from '@/modules/leads/queries'
 import type { LeadStage } from '@/db/schema/leads'
 import { LEAD_STAGES } from '@/modules/leads/types'
 import { PipelineView } from './pipeline-view'
-import { StageBadge } from './stage-badge'
+import { StageSelect } from './stage-select'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Plus, Search, Kanban, List, Users, Phone, Mail, Tag } from 'lucide-react'
@@ -46,13 +46,13 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Leads & Pipeline</h1>
           <p className="text-muted-foreground mt-1">
-            Acompanhe o funil de vendas e o avanÃƒÂ§o das oportunidades comerciais.
+            Acompanhe o funil de vendas e o avanço das oportunidades comerciais.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Alternador de VisualizaÃƒÂ§ÃƒÂ£o */}
-          <div className="flex bg-gray-100 p-1 rounded-lg border border-gray-200 text-xs">
+          {/* Alternador de Visualização */}
+          <div className="hidden md:flex bg-gray-100 p-1 rounded-lg border border-gray-200 text-xs">
             <Link
               href={`/leads?view=pipeline${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ''}`}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-colors ${
@@ -94,6 +94,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
             <Input
+              aria-label="Buscar leads"
               name="q"
               defaultValue={searchQuery}
               placeholder="Buscar por nome do lead, e-mail, telefone ou origem..."
@@ -112,9 +113,9 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
           )}
         </form>
 
-        {/* Filtros RÃƒÂ¡pidos por EstÃƒÂ¡gio (Pills) */}
+        {/* Filtros Rápidos por Estágio (Pills) */}
         <div className="flex items-center gap-2 overflow-x-auto pt-1 text-xs">
-          <span className="text-gray-400 font-medium whitespace-nowrap">EstÃƒÂ¡gios:</span>
+          <span className="text-gray-400 font-medium whitespace-nowrap">Estágios:</span>
           <Link
             href={`/leads?view=${currentView}${searchQuery ? `&q=${encodeURIComponent(searchQuery)}` : ''}`}
             className={`px-2.5 py-1 rounded-full border whitespace-nowrap font-medium transition-colors ${
@@ -143,12 +144,13 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
         </div>
       </div>
 
-      {/* ConteÃƒÂºdo Principal: Pipeline ou Lista */}
-      {currentView === 'pipeline' ? (
-        <PipelineView stageGroups={stageGroups} />
-      ) : (
-        /* VisualizaÃƒÂ§ÃƒÂ£o em Lista */
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+      {/* Conteúdo Principal: Pipeline ou Lista */}
+      {currentView === 'pipeline' && (
+        <div className="hidden md:block"><PipelineView stageGroups={filterStage ? stageGroups.filter((group) => group.stage === filterStage) : stageGroups} /></div>
+      )}
+      {(
+        /* Visualização em Lista */
+        <div className={`bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden ${currentView === 'pipeline' ? 'md:hidden' : ''}`}>
           {allLeads.length === 0 ? (
             <div className="p-12 text-center">
               <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 mb-4">
@@ -160,7 +162,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
               <p className="text-sm text-gray-500 mb-4">
                 {searchQuery
                   ? `Nenhum resultado corresponde a "${searchQuery}".`
-                  : 'NÃƒÂ£o hÃƒÂ¡ leads cadastrados neste estÃƒÂ¡gio.'}
+                  : 'Não há leads cadastrados neste estágio.'}
               </p>
               <Link href="/leads/new">
                 <Button size="sm">Cadastrar Lead</Button>
@@ -174,12 +176,12 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
                   <thead className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <tr>
                       <th className="px-6 py-3">Lead / Oportunidade</th>
-                      <th className="px-6 py-3">EstÃƒÂ¡gio</th>
+                      <th className="px-6 py-3">Estágio</th>
                       <th className="px-6 py-3">Origem</th>
                       <th className="px-6 py-3">Contato</th>
                       <th className="px-6 py-3">Cliente</th>
                       <th className="px-6 py-3">Cadastrado em</th>
-                      <th className="px-6 py-3 text-right">AÃƒÂ§ÃƒÂµes</th>
+                      <th className="px-6 py-3 text-right">Ações</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
@@ -194,7 +196,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
                           </Link>
                         </td>
                         <td className="px-6 py-4">
-                          <StageBadge stage={lead.stage} />
+                          <StageSelect leadId={lead.id} currentStage={lead.stage} compact />
                         </td>
                         <td className="px-6 py-4">
                           {lead.source ? (
@@ -231,7 +233,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
                               <span>{lead.customerName}</span>
                             </Link>
                           ) : (
-                            <span className="text-gray-400 italic">NÃƒÂ£o vinculado</span>
+                            <span className="text-gray-400 italic">Não vinculado</span>
                           )}
                         </td>
                         <td className="px-6 py-4 text-xs text-gray-500">
@@ -259,17 +261,17 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
               <div className="block md:hidden divide-y divide-gray-100">
                 {allLeads.map((lead) => (
                   <div key={lead.id} className="p-4 space-y-3">
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
                       <Link
                         href={`/leads/${lead.id}`}
-                        className="font-medium text-gray-900 hover:text-blue-600"
+                        className="min-w-0 break-words font-medium text-gray-900 hover:text-blue-600"
                       >
                         {lead.name}
                       </Link>
-                      <StageBadge stage={lead.stage} />
+                      <StageSelect leadId={lead.id} currentStage={lead.stage} compact />
                     </div>
 
-                    <div className="space-y-1 text-xs text-gray-600">
+                    <div className="space-y-1 break-all text-xs text-gray-600">
                       {lead.source && (
                         <div className="text-gray-500">
                           Origem: <strong className="text-gray-700">{lead.source}</strong>
@@ -313,7 +315,7 @@ export default async function LeadsPage({ searchParams }: LeadsPageProps) {
                 ))}
               </div>
 
-              {/* RodapÃƒÂ© da Lista */}
+              {/* Rodapé da Lista */}
               <div className="p-4 bg-gray-50 border-t border-gray-100 text-xs text-gray-500 flex justify-between items-center">
                 <span>
                   Total listados: <strong>{allLeads.length}</strong>

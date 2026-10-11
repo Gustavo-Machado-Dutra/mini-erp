@@ -11,6 +11,8 @@ const config: Config = {
     extend: {
       colors: {
         background: 'hsl(var(--background))',
+        success: 'hsl(var(--success))',
+        warning: 'hsl(var(--warning))',
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
